@@ -8,8 +8,9 @@ async function getFiles(dir) {
 
   for (let file of files) {
     if (!file.isDirectory()) {
-      let name = path.basename(file.name, path.extname(file.name));
-      let ext = path.extname(file.name).slice(1);
+      const parsedPath = path.parse(path.resolve(__dirname, file.name));
+      let name = parsedPath.name;
+      let ext = parsedPath.ext.slice(1);
       let stat = await fs.stat(path.resolve(dir, file.name));
 
       console.log(`${name} - ${ext} - ${stat.size}kb`);
